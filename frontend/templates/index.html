@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligent Auto Word Suggestion System</title>
+  <link rel="icon" type="image/svg+xml" href="/static/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+  <!-- ===== Top bar: logo + title ===== -->
+  <header class="topbar">
+    <div class="brand">
+      <img src="/static/logo.svg" alt="Logo" class="logo">
+      <div>
+        <h1>Intelligent Auto Word Suggestion</h1>
+        <p>Type faster with a Trie, a Max Heap and Edit Distance</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- tiny transparent admin logo (right corner) -->
+  <button id="adminBtn" class="admin-dot" title="Admin" aria-label="Admin">
+    <img src="/static/logo.svg" alt="">
+  </button>
+
+  <main>
+    <!-- red message when the server reports a problem -->
+    <div id="errorBar" class="error-bar hidden"></div>
+
+    <!-- ===== View 1: typing area + keyboard (everyone) ===== -->
+    <section id="typingView">
+      <div class="paper">
+        <textarea id="editor" rows="5" placeholder="Start typing here, or use the keyboard below..." autofocus></textarea>
+
+        <!-- spelling help appears here when a word looks wrong -->
+        <div id="spellBox" class="spell hidden">
+          <span id="spellMsg"></span>
+          <div id="spellChips" class="chips"></div>
+        </div>
+
+        <div class="paper-actions">
+          <button id="clearBtn" class="btn-small ghost">Clear</button>
+          <span id="learnMsg" class="note"></span>
+        </div>
+      </div>
+
+      <!-- keyboard deck: suggestion strip on top, keys below -->
+      <div class="deck">
+        <div class="strip-head"><span id="barLabel">Suggestions</span></div>
+        <div id="suggestions" class="strip"></div>
+        <div id="keyboard" class="keyboard"></div>
+      </div>
+    </section>
+
+    <!-- ===== View 2: dictionary (admin only) ===== -->
+    <section id="adminView" class="paper hidden">
+      <div class="admin-head">
+        <h2>Dictionary manager</h2>
+        <div class="admin-buttons">
+          <button id="restoreBtn" class="btn-small ghost">Restore default words</button>
+          <button id="logoutBtn" class="btn-small ghost">Log out</button>
+          <button id="backBtn" class="btn-small ghost">Back to keyboard</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <input id="addWord" type="text" placeholder="New word (letters only)">
+        <input id="addFreq" type="number" min="1" value="10" title="Frequency">
+        <button id="addBtn" class="btn-small">Add word</button>
+      </div>
+      <p id="dictMsg" class="note"></p>
+
+      <input id="dictSearch" type="text" placeholder="Search the dictionary">
+      <p id="dictCount" class="note"></p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Word</th><th>Frequency</th><th></th></tr></thead>
+          <tbody id="dictBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Admin login window ===== -->
+  <div id="loginModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>Admin login</h2>
+      <p class="note">Only the admin can manage the dictionary.</p>
+      <input id="passwordInput" type="password" placeholder="Password" autocomplete="current-password">
+      <p id="loginError" class="error"></p>
+      <div class="modal-actions">
+        <button id="loginCancel" class="btn-small ghost">Cancel</button>
+        <button id="loginBtn" class="btn-small">Log in</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
